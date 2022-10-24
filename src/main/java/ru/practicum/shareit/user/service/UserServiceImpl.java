@@ -6,15 +6,15 @@ import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exception.BadRequestException;
 import ru.practicum.shareit.exception.ConflictException;
 import ru.practicum.shareit.exception.NotFoundException;
-import ru.practicum.shareit.user.storage.UserDbStorage;
 import ru.practicum.shareit.user.dto.UserDto;
+import ru.practicum.shareit.user.storage.UserStorage;
 
 import java.util.Collection;
 
 @Service
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class UserServiceImpl implements UserService {
-    private final UserDbStorage userDbStorage;
+    private final UserStorage userStorage;
 
     @Override
     public UserDto addUser(UserDto userDto) throws BadRequestException {
@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
                 throw new ConflictException("Пользователь с email " + userDto.getEmail() + " уже существует");
             }
         }
-        return userDbStorage.addUser(userDto);
+        return userStorage.addUser(userDto);
     }
 
     @Override
@@ -35,16 +35,16 @@ public class UserServiceImpl implements UserService {
                 }
             }
         }
-        if (userDbStorage.getUser(userId).isPresent()) {
-            return userDbStorage.updateUser(userId, userDto);
+        if (userStorage.getUser(userId).isPresent()) {
+            return userStorage.updateUser(userId, userDto);
         }
         throw new NotFoundException("Пользователя с id " + userDto.getId() + " не существует");
     }
 
     @Override
     public void deleteUser(Long id) {
-        if (userDbStorage.getUser(id).isPresent()) {
-            userDbStorage.deleteUser(id);
+        if (userStorage.getUser(id).isPresent()) {
+            userStorage.deleteUser(id);
             return;
         }
         throw new NotFoundException("Пользователя с id " + id + " не существует");
@@ -52,13 +52,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Collection<UserDto> getAllUsers() {
-        return userDbStorage.getAllUsers();
+        return userStorage.getAllUsers();
     }
 
     @Override
     public UserDto getUser(Long id) {
-        if (userDbStorage.getUser(id).isPresent()) {
-            return userDbStorage.getUser(id).get();
+        if (userStorage.getUser(id).isPresent()) {
+            return userStorage.getUser(id).get();
         }
         throw new NotFoundException("Пользователя с id " + id + " не существует");
     }

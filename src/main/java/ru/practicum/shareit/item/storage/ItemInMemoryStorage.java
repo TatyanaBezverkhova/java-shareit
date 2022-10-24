@@ -14,7 +14,7 @@ import java.util.*;
 @Component
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @Slf4j
-public class ItemDbStorage implements ItemStorage {
+public class ItemInMemoryStorage implements ItemStorage {
     private final Map<Long, Item> items = new HashMap<>();
     private long id = 0;
 
