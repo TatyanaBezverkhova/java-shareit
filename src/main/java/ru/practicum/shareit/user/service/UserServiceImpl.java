@@ -3,63 +3,65 @@ package ru.practicum.shareit.user.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.exception.BadRequestException;
-import ru.practicum.shareit.exception.ConflictException;
 import ru.practicum.shareit.exception.NotFoundException;
+import ru.practicum.shareit.user.UserMapper;
+import ru.practicum.shareit.user.UserRepository;
 import ru.practicum.shareit.user.dto.UserDto;
-import ru.practicum.shareit.user.storage.UserStorage;
+import ru.practicum.shareit.user.model.User;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class UserServiceImpl implements UserService {
-    private final UserStorage userStorage;
+    private final UserRepository repository;
 
     @Override
     public UserDto addUser(UserDto userDto) throws BadRequestException {
-        for (UserDto userDto1 : getAllUsers()) {
-            if (userDto.getEmail().equals(userDto1.getEmail())) {
-                throw new ConflictException("Пользователь с email " + userDto.getEmail() + " уже существует");
-            }
-        }
-        return userStorage.addUser(userDto);
+        User user = repository.save(UserMapper.toUser(userDto));
+        return UserMapper.toUserDto(user);
     }
 
     @Override
     public UserDto updateUser(Long userId, UserDto userDto) throws BadRequestException {
+        Optional<User> userOptional = repository.findById(userId);
+        if (userOptional.isEmpty()) {
+            throw new NotFoundException("Пользователя с id " + userDto.getId() + " не существует");
+        }
+        User user = userOptional.get();
+        if (userDto.getName() != null) {
+            user.setName(userDto.getName());
+        }
         if (userDto.getEmail() != null) {
-            for (UserDto userDto1 : getAllUsers()) {
-                if (userDto1.getId() != userId && userDto.getEmail().equals(userDto1.getEmail())) {
-                    throw new ConflictException("Пользователь с email " + userDto.getEmail() + " уже существует");
-                }
-            }
+            user.setEmail(userDto.getEmail());
         }
-        if (userStorage.getUser(userId).isPresent()) {
-            return userStorage.updateUser(userId, userDto);
-        }
-        throw new NotFoundException("Пользователя с id " + userDto.getId() + " не существует");
+        return UserMapper.toUserDto(repository.save(user));
     }
 
     @Override
     public void deleteUser(Long id) {
-        if (userStorage.getUser(id).isPresent()) {
-            userStorage.deleteUser(id);
-            return;
+        Optional<User> user = repository.findById(id);
+        if (user.isEmpty()) {
+            throw new NotFoundException("Пользователя с id " + id + " не существует");
         }
-        throw new NotFoundException("Пользователя с id " + id + " не существует");
+        repository.deleteById(id);
     }
 
     @Override
     public Collection<UserDto> getAllUsers() {
-        return userStorage.getAllUsers();
+        return UserMapper.mapToUserDto(repository.findAll());
     }
 
     @Override
     public UserDto getUser(Long id) {
-        if (userStorage.getUser(id).isPresent()) {
-            return userStorage.getUser(id).get();
+        Optional<User> user = repository.findById(id);
+        if (user.isEmpty()) {
+            throw new NotFoundException("Пользователя с id " + id + " не существует");
         }
-        throw new NotFoundException("Пользователя с id " + id + " не существует");
+        return UserMapper.toUserDto(user.get());
     }
 }
