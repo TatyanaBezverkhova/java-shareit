@@ -27,6 +27,7 @@ public class BookingMapper {
         return bookingDto;
     }
 
+
     public static BookingDtoTwo toBookingDtoFrom(Booking booking) {
         BookingDtoTwo bookingDto = new BookingDtoTwo();
         bookingDto.setId(booking.getId());

@@ -54,7 +54,7 @@ public class ItemInMemoryStorage implements ItemStorage {
     public Collection<ItemDto> getAllOwnItems(Long userId) {
         List<ItemDto> itemsDto = new ArrayList<>();
         for (Item item : items.values()) {
-            if (item.getOwner().getId() == userId) {
+            if (Objects.equals(item.getOwner().getId(), userId)) {
                 itemsDto.add(ItemMapper.toItemDto(item));
             }
         }
