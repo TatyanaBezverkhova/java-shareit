@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
-@Transactional
+
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class BookingServiceImpl implements BookingService {
 
@@ -30,6 +30,7 @@ public class BookingServiceImpl implements BookingService {
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
 
+    @Transactional
     @Override
     public BookingDtoTwo addBooking(Long userId, BookingDto bookingDto) {
         Optional<Item> item = itemRepository.findById(bookingDto.getItemId());
@@ -45,7 +46,7 @@ public class BookingServiceImpl implements BookingService {
             throw new NotFoundException("Невозможно создать запрос на бронирование");
         }
         if (Objects.equals(item.get().getOwner().getId(), userId)) {
-            throw new NotFoundException("Владелецне может забронировать свою вещь");
+            throw new NotFoundException("Владелец не может забронировать свою вещь");
         }
         if (bookingDto.getEnd().isBefore(now) ||
                 bookingDto.getStart().isBefore(now) ||
@@ -60,6 +61,7 @@ public class BookingServiceImpl implements BookingService {
         return BookingMapper.toBookingDtoFrom(booking);
     }
 
+    @Transactional
     @Override
     public BookingDtoTwo updateStatusBooking(Long userId, Long bookingId, Boolean approved) {
         Optional<Booking> booking = repository.findById(bookingId);

@@ -15,17 +15,18 @@ import java.util.Collection;
 import java.util.Optional;
 
 @Service
-@Transactional
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class UserServiceImpl implements UserService {
     private final UserRepository repository;
 
+    @Transactional
     @Override
     public UserDto addUser(UserDto userDto) throws BadRequestException {
         User user = repository.save(UserMapper.toUser(userDto));
         return UserMapper.toUserDto(user);
     }
 
+    @Transactional
     @Override
     public UserDto updateUser(Long userId, UserDto userDto) throws BadRequestException {
         Optional<User> userOptional = repository.findById(userId);
@@ -42,6 +43,7 @@ public class UserServiceImpl implements UserService {
         return UserMapper.toUserDto(repository.save(user));
     }
 
+    @Transactional
     @Override
     public void deleteUser(Long id) {
         Optional<User> user = repository.findById(id);

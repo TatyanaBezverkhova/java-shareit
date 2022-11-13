@@ -27,7 +27,6 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
-@Transactional
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class ItemServiceImpl implements ItemService {
 
@@ -36,6 +35,7 @@ public class ItemServiceImpl implements ItemService {
     private final BookingRepository bookingRepository;
     private final CommentRepository commentRepository;
 
+    @Transactional
     @Override
     public ItemDto addItem(Long userId, ItemDto itemDto) throws BadRequestException {
         Optional<User> user = userRepository.findById(userId);
@@ -46,6 +46,7 @@ public class ItemServiceImpl implements ItemService {
         return ItemMapper.toItemDto(item);
     }
 
+    @Transactional
     @Override
     public ItemDto changeItem(Long userId, Long itemId, ItemDto itemDto) throws BadRequestException {
         Optional<Item> itemOpt = repository.findById(itemId);
@@ -134,6 +135,7 @@ public class ItemServiceImpl implements ItemService {
         return new ArrayList<>();
     }
 
+    @Transactional
     @Override
     public ItemDtoWithComment addComment(Long authorId, Long itemId, ItemDtoWithComment itemDtoWithComment) {
         Optional<Item> itemOpt = repository.findById(itemId);

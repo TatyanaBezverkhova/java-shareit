@@ -27,28 +27,33 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     List<Booking> findByItemAndBookerAndStartBeforeAndEndBefore(Item item, User booker, LocalDateTime s,
                                                                 LocalDateTime e);
 
-    @Query(nativeQuery = true, value = "SELECT * FROM BOOKINGS as b LEFT JOIN " +
-            "ITEMS as i ON b.ITEM_ID = i.ID WHERE i.OWNER_ID = ?1 AND b.END_DATE < ?2 AND b.START_DATE < ?3 " +
+    @Query(nativeQuery = true, value = "SELECT * FROM BOOKINGS as b " +
+            "LEFT JOIN ITEMS as i ON b.ITEM_ID = i.ID " +
+            "WHERE i.OWNER_ID = ?1 AND b.END_DATE < ?2 AND b.START_DATE < ?3 " +
             "ORDER BY b.START_DATE DESC")
     List<Booking> findByBookingForOwnerWithPast(Long i, LocalDateTime e, LocalDateTime s);
 
-    @Query(nativeQuery = true, value = "SELECT * FROM BOOKINGS as b LEFT JOIN " +
-            "ITEMS as i ON b.ITEM_ID = i.ID WHERE i.OWNER_ID = ?1 AND b.START_DATE < ?2 AND b.END_DATE > ?3 " +
+    @Query(nativeQuery = true, value = "SELECT * FROM BOOKINGS as b " +
+            "LEFT JOIN ITEMS as i ON b.ITEM_ID = i.ID " +
+            "WHERE i.OWNER_ID = ?1 AND b.START_DATE < ?2 AND b.END_DATE > ?3 " +
             "ORDER BY b.START_DATE DESC")
     List<Booking> findByBookingForOwnerWithCurrent(Long i, LocalDateTime s, LocalDateTime e);
 
-    @Query(nativeQuery = true, value = "SELECT * FROM BOOKINGS as b LEFT JOIN " +
-            "ITEMS as i ON b.ITEM_ID = i.ID WHERE i.OWNER_ID = ?1 AND b.START_DATE > ?2 " +
+    @Query(nativeQuery = true, value = "SELECT * FROM BOOKINGS as b " +
+            "LEFT JOIN ITEMS as i ON b.ITEM_ID = i.ID " +
+            "WHERE i.OWNER_ID = ?1 AND b.START_DATE > ?2 " +
             "ORDER BY b.START_DATE DESC")
     List<Booking> findByBookingForOwnerWithFuture(Long i, LocalDateTime s);
 
-    @Query(nativeQuery = true, value = "SELECT * FROM BOOKINGS as b LEFT JOIN " +
-            "ITEMS as i ON b.ITEM_ID = i.ID WHERE i.OWNER_ID = ?1 " +
+    @Query(nativeQuery = true, value = "SELECT * FROM BOOKINGS as b " +
+            "LEFT JOIN ITEMS as i ON b.ITEM_ID = i.ID " +
+            "WHERE i.OWNER_ID = ?1 " +
             "ORDER BY b.START_DATE DESC")
     List<Booking> findByBookingForOwnerWithAll(Long i);
 
-    @Query(nativeQuery = true, value = "SELECT * FROM BOOKINGS as b LEFT JOIN " +
-            "ITEMS as i ON b.ITEM_ID = i.ID WHERE i.OWNER_ID = ?1 AND b.STATUS LIKE ?2 " +
+    @Query(nativeQuery = true, value = "SELECT * FROM BOOKINGS as b " +
+            "LEFT JOIN ITEMS as i ON b.ITEM_ID = i.ID " +
+            "WHERE i.OWNER_ID = ?1 AND b.STATUS LIKE ?2 " +
             "ORDER BY b.START_DATE DESC")
     List<Booking> findByBookingForOwnerWithWaitingOrRejected(Long i, String status);
 
