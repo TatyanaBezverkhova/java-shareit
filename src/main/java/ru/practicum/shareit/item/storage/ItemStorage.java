@@ -16,7 +16,7 @@ public interface ItemStorage {
 
     Collection<ItemDto> getAllOwnItems(Long userId);
 
-    Collection<ItemDto> getItemsForRent(Long userId, String substring);
+    Collection<ItemDto> getItemsForRent(String substring);
 
     Optional<Item> getItemFromMap(Long itemId);
 }

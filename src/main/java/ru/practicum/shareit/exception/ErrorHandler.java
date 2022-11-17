@@ -42,6 +42,14 @@ public class ErrorHandler {
     }
 
     @ExceptionHandler
+    public ResponseEntity<Map<String, String>> handleStatus(final StatusBadRequestException e) {
+        log.warn("Введен неверный статус", e);
+        return new ResponseEntity<>(
+                Map.of("error", e.getMessage()),
+                HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
     public ResponseEntity<Map<String, String>> handleForbiddenError(final ForbiddenException e) {
         log.warn("Отсутствует доступ для клиента к указанному ресурсу", e);
         return new ResponseEntity<>(
