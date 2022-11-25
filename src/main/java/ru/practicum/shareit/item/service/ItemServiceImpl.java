@@ -127,7 +127,7 @@ public class ItemServiceImpl implements ItemService {
             if (size == 0) {
                 throw new BadRequestException("Size не может принимать значение 0");
             }
-            Pageable pageable = PageRequest.of(page/size, size);
+            Pageable pageable = PageRequest.of(page / size, size);
             Page<Item> itemsPage = repository.findByOwner(user, pageable);
             for (Item item : itemsPage) {
                 items.add(item);
@@ -142,13 +142,16 @@ public class ItemServiceImpl implements ItemService {
             List<Booking> bookings = bookingRepository.findByItemOrderByStartDesc(ItemMapper.toItemWithDate(itemDto, user));
             if (!bookings.isEmpty()) {
                 LocalDateTime next = bookings.get(0).getStart();
-                LocalDateTime last = bookings.get(1).getStart();
                 Booking nextBooking = bookings.get(0);
-                Booking lastBooking = bookings.get(1);
                 BookingDtoForItem bookingNext = BookingMapper.toBookingDtoForItem(nextBooking, next);
-                BookingDtoForItem bookingLast = BookingMapper.toBookingDtoForItem(lastBooking, last);
                 itemDto.setNextBooking(bookingNext);
-                itemDto.setLastBooking(bookingLast);
+                if (bookings.size() >= 2) {
+                    LocalDateTime last = bookings.get(1).getStart();
+                    Booking lastBooking = bookings.get(1);
+                    BookingDtoForItem bookingLast = BookingMapper.toBookingDtoForItem(lastBooking, last);
+                    itemDto.setLastBooking(bookingLast);
+                }
+
             }
         }
         return itemDtos;
@@ -165,7 +168,7 @@ public class ItemServiceImpl implements ItemService {
                 if (size == 0) {
                     throw new BadRequestException("Size не может принимать значение 0");
                 }
-                Pageable pageable = PageRequest.of(page/size, size);
+                Pageable pageable = PageRequest.of(page / size, size);
                 return ItemMapper.mapToItemDto(repository.findItemsByNameOrDescription(substring, pageable));
             }
             return ItemMapper.mapToItemDto(repository.findItemsByNameOrDescription(substring));

@@ -18,15 +18,6 @@ public class ItemRequestMapper {
         return requestDto;
     }
 
-    public static RequestDto toRequestTwoDto(ItemRequest itemRequest) {
-        RequestDto requestDto = new RequestDto();
-        requestDto.setId(itemRequest.getId());
-        requestDto.setDescription(itemRequest.getDescription());
-        requestDto.setRequestor(itemRequest.getRequestor());
-        requestDto.setCreated(itemRequest.getCreated());
-        return requestDto;
-    }
-
     public static ItemRequest toItemRequest(ItemRequestDto requestDto) {
         ItemRequest request = new ItemRequest();
         request.setId(requestDto.getId());

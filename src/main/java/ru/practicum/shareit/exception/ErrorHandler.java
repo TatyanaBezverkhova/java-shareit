@@ -67,12 +67,4 @@ public class ErrorHandler {
         );
     }
 
-    /*@ExceptionHandler
-    public ResponseEntity<Map<String, String>> handleConflictError(final ConflictException e) {
-        log.info("Запрос со стороны клиента не соответствует тому, чего ожидает сервер", e);
-        return new ResponseEntity<>(
-                Map.of("Запрос не может быть выполнен из-за конфликтного обращения к ресурсу", e.getMessage()),
-                HttpStatus.CONFLICT
-        );
-    }*/
 }

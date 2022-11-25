@@ -18,7 +18,8 @@ public class ItemMapper {
         itemDto.setName(item.getName());
         itemDto.setDescription(item.getDescription());
         itemDto.setAvailable(item.getAvailable());
-        itemDto.setRequestId(item.getRequest() != null ? item.getRequest().getId():null);
+        itemDto.setOwner(item.getOwner());
+        itemDto.setRequestId(item.getRequest() != null ? item.getRequest().getId() : null);
         return itemDto;
     }
 
@@ -28,7 +29,7 @@ public class ItemMapper {
         itemDto.setName(item.getName());
         itemDto.setDescription(item.getDescription());
         itemDto.setAvailable(item.getAvailable());
-        //itemDto.setRequest(item.getRequest() != null ? item.getRequest().getId() : null);
+        itemDto.setOwner(item.getOwner());
         return itemDto;
 
     }

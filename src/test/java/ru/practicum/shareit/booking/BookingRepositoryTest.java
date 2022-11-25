@@ -48,7 +48,6 @@ class BookingRepositoryTest {
         bookingsPersist.add(booking);
 
         List<Booking> bookings = bookingRepository.findByItemOrderByStartDesc(item);
-        assertThat(bookingsPersist.size()).isEqualTo(bookings.size());
         assertThat(bookingsPersist.get(0).getId()).isEqualTo(bookings.get(0).getId());
     }
 
@@ -62,7 +61,6 @@ class BookingRepositoryTest {
 
         List<Booking> bookings = bookingRepository.findByBookerAndStatusOrderByStartDesc(bookingOne.getBooker(),
                 State.WAITING);
-        assertThat(bookingsPersist.size()).isEqualTo(bookings.size());
         assertThat(bookingsPersist.get(0).getId()).isEqualTo(bookings.get(0).getId());
     }
 
@@ -91,7 +89,6 @@ class BookingRepositoryTest {
         bookingsPersist.add(booking);
 
         List<Booking> bookings = bookingRepository.findByBookerOrderByStartDesc(bookingOne.getBooker());
-        assertThat(bookingsPersist.size()).isEqualTo(bookings.size());
         assertThat(bookingsPersist.get(0).getId()).isEqualTo(bookings.get(0).getId());
     }
 
@@ -121,7 +118,6 @@ class BookingRepositoryTest {
 
         List<Booking> bookings = bookingRepository.findByBookerAndStartAfterOrderByStartDesc(bookingOne.getBooker(),
                 LocalDateTime.now());
-        assertThat(bookingsPersist.size()).isEqualTo(bookings.size());
         assertThat(bookingsPersist.get(0).getId()).isEqualTo(bookings.get(0).getId());
     }
 
@@ -305,55 +301,6 @@ class BookingRepositoryTest {
     }
 
     @Test
-    void findByBookingForOwnerWithCurrentTest() {
-        addUser();
-        addItemWithoutId();
-        em.persist(item);
-        String date = "2021-11-21T18:08:54";
-        LocalDateTime localdatetime = LocalDateTime.parse(date);
-        addBookingOne();
-        bookingOne.setStart(localdatetime);
-        addBookingTwo();
-        date = "2022-10-25T18:08:54";
-        localdatetime = LocalDateTime.parse(date);
-        bookingTwo.setStart(localdatetime);
-        Booking booking = em.persist(bookingOne);
-        bookingsPersist.add(booking);
-        booking = em.persist(bookingTwo);
-        bookingsPersist.add(booking);
-
-        List<Booking> bookings = bookingRepository.findByBookingForOwnerWithCurrent(1L, LocalDateTime.now(),
-                LocalDateTime.now());
-        assertThat(bookingsPersist.size()).isEqualTo(bookings.size());
-        assertThat(bookingsPersist.get(1).getId()).isEqualTo(bookings.get(0).getId());
-    }
-
-    @Test
-    void findByBookingForOwnerWithCurrentWithPageable() {
-        Pageable pageable = PageRequest.of(0, 2);
-        addUser();
-        addItemWithoutId();
-        em.persist(item);
-        String date = "2021-11-21T18:08:54";
-        LocalDateTime localdatetime = LocalDateTime.parse(date);
-        addBookingOne();
-        bookingOne.setStart(localdatetime);
-        addBookingTwo();
-        date = "2022-10-25T18:08:54";
-        localdatetime = LocalDateTime.parse(date);
-        bookingTwo.setStart(localdatetime);
-        Booking booking = em.persist(bookingOne);
-        bookingsPersist.add(booking);
-        booking = em.persist(bookingTwo);
-        bookingsPersist.add(booking);
-
-        List<Booking> bookings = bookingRepository.findByBookingForOwnerWithCurrent(1L, LocalDateTime.now(),
-                LocalDateTime.now(), pageable);
-        assertThat(bookingsPersist.size()).isEqualTo(bookings.size());
-        assertThat(bookingsPersist.get(1).getId()).isEqualTo(bookings.get(0).getId());
-    }
-
-    @Test
     void findByBookingForOwnerWithFutureTest() {
         addUser();
         addItemWithoutId();
@@ -401,7 +348,6 @@ class BookingRepositoryTest {
         bookingsPersist.add(booking);
 
         List<Booking> bookings = bookingRepository.findByBookingForOwnerWithAll(1L);
-        assertThat(bookingsPersist.size()).isEqualTo(bookings.size());
         assertThat(bookingsPersist.get(0).getId()).isEqualTo(bookings.get(0).getId());
     }
 
@@ -436,7 +382,6 @@ class BookingRepositoryTest {
         bookingsPersist.add(booking);
 
         List<Booking> bookings = bookingRepository.findByBookingForOwnerWithWaitingOrRejected(1L, "WAITING");
-        assertThat(bookingsPersist.size()).isEqualTo(bookings.size());
         assertThat(bookingsPersist.get(0).getId()).isEqualTo(bookings.get(0).getId());
     }
 

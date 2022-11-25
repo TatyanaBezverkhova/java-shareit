@@ -204,23 +204,6 @@ class BookingControllerTest {
         user.setEmail("buffy@vampire.com");
     }
 
-    private void addBooking() {
-        User booker = new User();
-        booker.setId(3L);
-        booker.setName("Katya");
-        booker.setEmail("katya@katya.com");
-        booking.setId(1L);
-        booking.setItem(item);
-        booking.setStatus(State.WAITING);
-        String date = "2023-11-24T18:08:54";
-        LocalDateTime localdatetime = LocalDateTime.parse(date);
-        booking.setStart(localdatetime);
-        date = "2023-11-26T18:08:54";
-        localdatetime = LocalDateTime.parse(date);
-        booking.setEnd(localdatetime);
-        booking.setBooker(booker);
-    }
-
     private void addBookingDto() {
         User booker = new User();
         booker.setId(4L);

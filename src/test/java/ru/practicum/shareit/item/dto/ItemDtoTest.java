@@ -8,6 +8,7 @@ import org.springframework.boot.test.json.JsonContent;
 import ru.practicum.shareit.user.model.User;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 @JsonTest
 class ItemDtoTest {
     @Autowired
@@ -38,6 +39,7 @@ class ItemDtoTest {
         assertThat(result).extractingJsonPathStringValue("$.description").isEqualTo("For food");
         assertThat(result).extractingJsonPathNumberValue("$.requestId").isEqualTo(1);
     }
+
     private void addUser() {
         user.setId(1L);
         user.setName("Buffy");

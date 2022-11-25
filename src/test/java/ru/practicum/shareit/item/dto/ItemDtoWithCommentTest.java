@@ -27,7 +27,6 @@ class ItemDtoWithCommentTest {
         itemDto.setCreated(localdatetime);
         itemDto.setAuthorName("Leo");
 
-
         JsonContent<ItemDtoWithComment> result = json.write(itemDto);
 
         assertThat(result).extractingJsonPathNumberValue("$.id").isEqualTo(1);

@@ -34,8 +34,8 @@ class CommentRepositoryTest {
         Comment commentPersist = em.persist(comment);
         List<Comment> comment2 = commentRepository.findByItem(item);
         addUser();
-        assertThat(commentPersist).isEqualTo(comment2.get(0));
-        assertThat(commentPersist.getId()).isEqualTo(comment2.get(0).getId());
+        assertThat(commentPersist).isEqualTo(comment2.get(1));
+        assertThat(commentPersist.getId()).isEqualTo(comment2.get(1).getId());
 
     }
 
