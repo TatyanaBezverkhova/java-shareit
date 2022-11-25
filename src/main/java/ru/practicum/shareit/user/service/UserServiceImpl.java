@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     public UserDto updateUser(Long userId, UserDto userDto) throws BadRequestException {
         Optional<User> userOptional = repository.findById(userId);
         if (userOptional.isEmpty()) {
-            throw new NotFoundException("Пользователя с id " + userDto.getId() + " не существует");
+            throw new NotFoundException("Пользователь не найден");
         }
         User user = userOptional.get();
         if (userDto.getName() != null) {
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(Long id) {
         Optional<User> user = repository.findById(id);
         if (user.isEmpty()) {
-            throw new NotFoundException("Пользователя с id " + id + " не существует");
+            throw new NotFoundException("Пользователь не найден");
         }
         repository.deleteById(id);
     }
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
     public UserDto getUser(Long id) {
         Optional<User> user = repository.findById(id);
         if (user.isEmpty()) {
-            throw new NotFoundException("Пользователя с id " + id + " не существует");
+            throw new NotFoundException("Пользователь не найден");
         }
         return UserMapper.toUserDto(user.get());
     }

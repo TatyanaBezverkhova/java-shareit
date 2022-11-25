@@ -2,7 +2,7 @@ package ru.practicum.shareit.item.mapper;
 
 import org.springframework.stereotype.Component;
 import ru.practicum.shareit.item.dto.ItemDto;
-import ru.practicum.shareit.item.dto.ItemDtoWithDate;
+import ru.practicum.shareit.item.dto.ItemDtoWithBooking;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.model.User;
 
@@ -18,12 +18,12 @@ public class ItemMapper {
         itemDto.setName(item.getName());
         itemDto.setDescription(item.getDescription());
         itemDto.setAvailable(item.getAvailable());
-        //itemDto.setRequest(item.getRequest() != null ? item.getRequest().getId() : null);
+        itemDto.setRequestId(item.getRequest() != null ? item.getRequest().getId():null);
         return itemDto;
     }
 
-    public static ItemDtoWithDate toItemDtoWithDate(Item item) {
-        ItemDtoWithDate itemDto = new ItemDtoWithDate();
+    public static ItemDtoWithBooking toItemDtoWithDate(Item item) {
+        ItemDtoWithBooking itemDto = new ItemDtoWithBooking();
         itemDto.setId(item.getId());
         itemDto.setName(item.getName());
         itemDto.setDescription(item.getDescription());
@@ -44,7 +44,18 @@ public class ItemMapper {
 
     }
 
-    public static Item toItemWithDate(ItemDtoWithDate itemDto, User user) {
+    public static Item toItem(ItemDtoWithBooking itemDtoWithBooking) {
+        Item item = new Item();
+        item.setId(itemDtoWithBooking.getId());
+        item.setName(itemDtoWithBooking.getName());
+        item.setDescription(itemDtoWithBooking.getDescription());
+        item.setAvailable(itemDtoWithBooking.getAvailable());
+        item.setOwner(itemDtoWithBooking.getOwner());
+        return item;
+
+    }
+
+    public static Item toItemWithDate(ItemDtoWithBooking itemDto, User user) {
         Item item = new Item();
         item.setId(itemDto.getId());
         item.setName(itemDto.getName());
@@ -63,8 +74,16 @@ public class ItemMapper {
         return dtos;
     }
 
-    public static List<ItemDtoWithDate> mapToItemDtoWithDate(Iterable<Item> items) {
-        List<ItemDtoWithDate> dtos = new ArrayList<>();
+    public static List<Item> mapToItem(Iterable<ItemDtoWithBooking> items) {
+        List<Item> dtos = new ArrayList<>();
+        for (ItemDtoWithBooking item : items) {
+            dtos.add(toItem(item));
+        }
+        return dtos;
+    }
+
+    public static List<ItemDtoWithBooking> mapToItemDtoWithDate(Iterable<Item> items) {
+        List<ItemDtoWithBooking> dtos = new ArrayList<>();
         for (Item item : items) {
             dtos.add(toItemDtoWithDate(item));
         }

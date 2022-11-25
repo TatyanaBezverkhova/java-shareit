@@ -33,4 +33,12 @@ public class UserMapper {
         }
         return dtos;
     }
+
+    public static List<User> mapToUser(Iterable<UserDto> users) {
+        List<User> dtos = new ArrayList<>();
+        for (UserDto user : users) {
+            dtos.add(toUser(user));
+        }
+        return dtos;
+    }
 }

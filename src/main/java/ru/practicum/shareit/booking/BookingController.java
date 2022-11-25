@@ -41,18 +41,20 @@ public class BookingController {
 
     @GetMapping
     public Collection<BookingDtoTwo> findBookingByBooker(@RequestHeader("X-Sharer-User-Id") Long userId,
-                                                         @RequestParam(required = false)
-                                                         String state) {
+                                                         @RequestParam(required = false) String state,
+                                                         @RequestParam(name = "from", required = false) Integer from,
+                                                         @RequestParam(name = "size",  required = false) Integer size) {
         log.info("Получение списка бронирований пользовалеля с id {}", userId);
-        return bookingService.getBookingByBooker(userId, state);
+        return bookingService.getBookingByBooker(userId, state, from, size);
     }
 
     @GetMapping("/owner")
     public Collection<BookingDtoTwo> findBookingByOwner(@RequestHeader("X-Sharer-User-Id") Long userId,
-                                                        @RequestParam(required = false)
-                                                        String state) {
+                                                        @RequestParam(required = false) String state,
+                                                        @RequestParam(name = "from", required = false) Integer from,
+                                                        @RequestParam(name = "size", required = false) Integer size) {
         log.info("Получение списка бронирований для всех вещей пользователя с id {}", userId);
-        return bookingService.getBookingByOwner(userId, state);
+        return bookingService.getBookingByOwner(userId, state, from, size);
     }
 
 }

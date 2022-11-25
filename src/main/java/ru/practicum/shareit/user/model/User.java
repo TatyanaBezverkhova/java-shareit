@@ -1,5 +1,6 @@
 package ru.practicum.shareit.user.model;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -13,7 +14,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @NotBlank
     @Column(nullable = false)
@@ -23,4 +24,13 @@ public class User {
     @NotBlank
     @Column(nullable = false)
     private String email;
+
+    /*@Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }*/
 }

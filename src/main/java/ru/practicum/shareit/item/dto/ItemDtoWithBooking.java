@@ -1,5 +1,6 @@
 package ru.practicum.shareit.item.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import ru.practicum.shareit.booking.dto.BookingDtoForItem;
 import ru.practicum.shareit.user.model.User;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class ItemDtoWithDate {
+public class ItemDtoWithBooking {
     private long id;
 
     @NotBlank

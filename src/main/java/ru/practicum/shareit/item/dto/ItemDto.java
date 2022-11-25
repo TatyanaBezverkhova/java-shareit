@@ -22,7 +22,7 @@ public class ItemDto {
 
     private User owner;
 
-    private Long request;
+    private Long requestId;
 
 
 }

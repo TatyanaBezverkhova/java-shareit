@@ -6,11 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.item.dto.ItemDtoWithComment;
 import ru.practicum.shareit.item.dto.ItemDto;
-import ru.practicum.shareit.item.dto.ItemDtoWithDate;
+import ru.practicum.shareit.item.dto.ItemDtoWithBooking;
 import ru.practicum.shareit.item.service.ItemService;
 
 import javax.validation.Valid;
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("/items")
@@ -21,7 +22,8 @@ public class ItemController {
     private final ItemService itemService;
 
     @PostMapping
-    public ItemDto addItem(@RequestHeader("X-Sharer-User-Id") Long userId, @Valid @RequestBody ItemDto itemDto) {
+    public ItemDto addItem(@RequestHeader("X-Sharer-User-Id") Long userId, @Valid @RequestBody ItemDto itemDto
+    ) {
         log.info("Добавления новой вещи пользователем с id {}", userId);
         return itemService.addItem(userId, itemDto);
     }
@@ -34,22 +36,26 @@ public class ItemController {
     }
 
     @GetMapping("/{itemId}")
-    public ItemDtoWithDate getItem(@RequestHeader("X-Sharer-User-Id") Long userId, @PathVariable Long itemId) {
+    public ItemDtoWithBooking getItem(@RequestHeader("X-Sharer-User-Id") Long userId, @PathVariable Long itemId) {
         log.info("Получение вещи с id {}", itemId);
         return itemService.getItem(userId, itemId);
     }
 
     @GetMapping
-    public Collection<ItemDtoWithDate> getAllOwnItems(@RequestHeader("X-Sharer-User-Id") Long userId) {
+    public List<ItemDtoWithBooking> getAllOwnItems(@RequestHeader("X-Sharer-User-Id") Long userId,
+                                                   @RequestParam(name = "from", required = false) Integer from,
+                                                   @RequestParam(name = "size", required = false) Integer size) {
         log.info("Получение всех вещей пользователя с id {}", userId);
-        return itemService.getAllOwnItems(userId);
+        return itemService.getAllOwnItems(userId, from, size);
     }
 
     @GetMapping("/search")
     public Collection<ItemDto> getItemsForRent(@RequestHeader("X-Sharer-User-Id") Long userId,
-                                               @RequestParam String text) {
+                                               @RequestParam String text,
+                                               @RequestParam(name = "from", required = false) Integer from,
+                                               @RequestParam(name = "size", required = false) Integer size) {
         log.info("Получение вещей для аренды содержащие в названии или описании текст {}", text);
-        return itemService.getItemsForRent(text);
+        return itemService.getItemsForRent(text, from, size);
     }
 
     @PostMapping("{itemId}/comment")
