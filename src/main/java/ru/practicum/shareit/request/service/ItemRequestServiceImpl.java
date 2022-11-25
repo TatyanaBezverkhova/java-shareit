@@ -76,7 +76,7 @@ public class ItemRequestServiceImpl implements ItemRequestService {
             if (size == 0) {
                 throw new BadRequestException("Size не может принимать значение 0");
             }
-                pageable = PageRequest.of(page/size, size, sortById);
+            pageable = PageRequest.of(page / size, size, sortById);
 
             Page<ItemRequest> requests = repository.findAllBy(userId, pageable);
             for (ItemRequest request : requests) {

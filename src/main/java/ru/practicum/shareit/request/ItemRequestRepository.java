@@ -15,7 +15,6 @@ public interface ItemRequestRepository extends JpaRepository<ItemRequest, Long> 
 
     @Query(nativeQuery = true, value = "SELECT * FROM REQUESTS" +
             " WHERE REQUESTOR_ID != ?1")
-    Page<ItemRequest>findAllBy(Long userId, Pageable pageable);
-
+    Page<ItemRequest> findAllBy(Long userId, Pageable pageable);
 
 }

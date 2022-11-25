@@ -14,8 +14,8 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     @Query(nativeQuery = true, value = "SELECT * FROM items AS i WHERE i.REQUEST_ID = ?1")
     List<Item> findItemByRequest(Long idRequest);
 
-
     List<Item> findByOwner(User user);
+
     Page<Item> findByOwner(User user, Pageable pageable);
 
     @Query(nativeQuery = true, value = "SELECT * FROM items AS i " +
