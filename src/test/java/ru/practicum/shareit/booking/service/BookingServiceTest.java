@@ -1086,7 +1086,7 @@ class BookingServiceTest {
                 .thenReturn(Optional.of(user));
 
         Mockito
-                .when(bookingRepository.findByBookingForOwnerWithCurrent(any(), any(), any()))
+                .when(bookingRepository.findByBookingForOwnerWithCurrent(any(), any()))
                 .thenReturn(bookingList);
 
         Collection<BookingDtoTwo> bookings = bookingService.getBookingByOwner(1L, "CURRENT",
@@ -1116,7 +1116,7 @@ class BookingServiceTest {
                 .thenReturn(Optional.of(user));
 
         Mockito
-                .when(bookingRepository.findByBookingForOwnerWithCurrent(any(), any(),
+                .when(bookingRepository.findByBookingForOwnerWithCurrent(any(),
                         any(), any()))
                 .thenReturn(bookingList);
 
@@ -1148,7 +1148,7 @@ class BookingServiceTest {
                 .thenReturn(Optional.of(user));
 
         Mockito
-                .when(bookingRepository.findByBookingForOwnerWithPast(any(), any(), any()))
+                .when(bookingRepository.findByBookingForOwnerWithPast(any(), any()))
                 .thenReturn(bookingList);
 
         Collection<BookingDtoTwo> bookings = bookingService.getBookingByOwner(1L, "PAST",
@@ -1178,7 +1178,7 @@ class BookingServiceTest {
                 .thenReturn(Optional.of(user));
 
         Mockito
-                .when(bookingRepository.findByBookingForOwnerWithPast(any(), any(), any(), any()))
+                .when(bookingRepository.findByBookingForOwnerWithPast(any(), any(), any()))
                 .thenReturn(bookingList);
 
         Collection<BookingDtoTwo> bookings = bookingService.getBookingByOwner(1L, "PAST", 0, 1);

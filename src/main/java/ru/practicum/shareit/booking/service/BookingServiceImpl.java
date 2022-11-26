@@ -226,12 +226,10 @@ public class BookingServiceImpl implements BookingService {
                 break;
 
             case "CURRENT":
-                bookings = repository.findByBookingForOwnerWithCurrent(usersId, LocalDateTime.now(),
-                        LocalDateTime.now(), pageable);
+                bookings = repository.findByBookingForOwnerWithCurrent(usersId, LocalDateTime.now(), pageable);
                 break;
             case "PAST":
-                bookings = repository.findByBookingForOwnerWithPast(usersId, LocalDateTime.now(),
-                        LocalDateTime.now(), pageable);
+                bookings = repository.findByBookingForOwnerWithPast(usersId, LocalDateTime.now(), pageable);
                 break;
             case "FUTURE":
                 bookings = repository.findByBookingForOwnerWithFuture(usersId, LocalDateTime.now(), pageable);
@@ -260,10 +258,10 @@ public class BookingServiceImpl implements BookingService {
                 bookingsByOwner = repository.findByBookingForOwnerWithAll(usersId);
                 break;
             case "CURRENT":
-                bookingsByOwner = repository.findByBookingForOwnerWithCurrent(usersId, LocalDateTime.now(), LocalDateTime.now());
+                bookingsByOwner = repository.findByBookingForOwnerWithCurrent(usersId, LocalDateTime.now());
                 break;
             case "PAST":
-                bookingsByOwner = repository.findByBookingForOwnerWithPast(usersId, LocalDateTime.now(), LocalDateTime.now());
+                bookingsByOwner = repository.findByBookingForOwnerWithPast(usersId, LocalDateTime.now());
                 break;
             case "FUTURE":
                 bookingsByOwner = repository.findByBookingForOwnerWithFuture(usersId, LocalDateTime.now());

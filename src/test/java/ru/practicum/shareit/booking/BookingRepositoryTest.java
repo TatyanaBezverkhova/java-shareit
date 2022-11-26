@@ -263,8 +263,7 @@ class BookingRepositoryTest {
         booking = em.persist(bookingTwo);
         bookingsPersist.add(booking);
 
-        List<Booking> bookings = bookingRepository.findByBookingForOwnerWithPast(1L, LocalDateTime.now(),
-                LocalDateTime.now());
+        List<Booking> bookings = bookingRepository.findByBookingForOwnerWithPast(1L, LocalDateTime.now());
         assertThat(bookingsPersist.size()).isEqualTo(bookings.size());
         assertThat(bookingsPersist.get(1).getId()).isEqualTo(bookings.get(0).getId());
     }
@@ -294,8 +293,7 @@ class BookingRepositoryTest {
         booking = em.persist(bookingTwo);
         bookingsPersist.add(booking);
 
-        List<Booking> bookings = bookingRepository.findByBookingForOwnerWithPast(1L, LocalDateTime.now(),
-                LocalDateTime.now(), pageable);
+        List<Booking> bookings = bookingRepository.findByBookingForOwnerWithPast(1L, LocalDateTime.now(), pageable);
         assertThat(bookingsPersist.size()).isEqualTo(bookings.size());
         assertThat(bookingsPersist.get(1).getId()).isEqualTo(bookings.get(0).getId());
     }

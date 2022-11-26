@@ -121,12 +121,7 @@ public class ItemServiceImpl implements ItemService {
         }
         User user = userOpt.get();
         if (page != null && size != null) {
-            if (page < 0 || size < 0) {
-                throw new BadRequestException("From или size не могут принимать отрицательноге значение");
-            }
-            if (size == 0) {
-                throw new BadRequestException("Size не может принимать значение 0");
-            }
+            sizeAndPage(size, page);
             Pageable pageable = PageRequest.of(page / size, size);
             Page<Item> itemsPage = repository.findByOwner(user, pageable);
             for (Item item : itemsPage) {
@@ -162,12 +157,7 @@ public class ItemServiceImpl implements ItemService {
     public Collection<ItemDto> getItemsForRent(String substring, Integer page, Integer size) {
         if (!Objects.equals(substring, "")) {
             if (page != null && size != null) {
-                if (page < 0 || size < 0) {
-                    throw new BadRequestException("From или size не могут принимать отрицательноге значение");
-                }
-                if (size == 0) {
-                    throw new BadRequestException("Size не может принимать значение 0");
-                }
+                sizeAndPage(size, page);
                 Pageable pageable = PageRequest.of(page / size, size);
                 return ItemMapper.mapToItemDto(repository.findItemsByNameOrDescription(substring, pageable));
             }
@@ -195,5 +185,14 @@ public class ItemServiceImpl implements ItemService {
         }
         Comment comment = CommentMapper.toComment(itemDtoWithComment, item, author.get());
         return CommentMapper.toCommentDto(commentRepository.save(comment));
+    }
+
+    private void sizeAndPage(Integer size, Integer page) {
+        if (page < 0 || size < 0) {
+            throw new BadRequestException("From или size не могут принимать отрицательноге значение");
+        }
+        if (size == 0) {
+            throw new BadRequestException("Size не может принимать значение 0");
+        }
     }
 }
