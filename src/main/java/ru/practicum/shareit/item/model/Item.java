@@ -1,15 +1,20 @@
 package ru.practicum.shareit.item.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import ru.practicum.shareit.request.model.ItemRequest;
 import ru.practicum.shareit.user.model.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Entity
 @Table(name = "items", schema = "public")
-@Data
+
+@Getter
+@Setter
 public class Item {
 
     @Id
@@ -32,4 +37,20 @@ public class Item {
     @JoinColumn(name = "owner_id")
     private User owner;
 
+    @ManyToOne
+    @JoinColumn(name = "request_id")
+    private ItemRequest request;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return id == item.id && Objects.equals(name, item.name) && Objects.equals(description, item.description) && Objects.equals(available, item.available) && Objects.equals(owner, item.owner) && Objects.equals(request, item.request);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, available, owner, request);
+    }
 }

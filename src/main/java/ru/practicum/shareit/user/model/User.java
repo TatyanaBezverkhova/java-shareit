@@ -13,7 +13,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @NotBlank
     @Column(nullable = false)
@@ -23,4 +23,13 @@ public class User {
     @NotBlank
     @Column(nullable = false)
     private String email;
+
+    /*@Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }*/
 }
