@@ -13,7 +13,6 @@ import ru.practicum.shareit.booking.dto.StateGateway;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/bookings")
@@ -31,12 +30,9 @@ public class BookingControllerGateway {
                                                       Integer from,
                                                       @Positive @RequestParam(name = "size", defaultValue = "10")
                                                       Integer size) {
-        Optional<StateGateway> stateGateway = StateGateway.from(stateParam);
-        if (stateGateway.isEmpty()) {
-            return ResponseEntity.badRequest().body(new HttpError("Unknown state: " + stateParam));
-        }
+        StateGateway stateGateway = StateGateway.from(stateParam);
         log.info("Get booking with state {}, userId={}, from={}, size={}", stateParam, userId, from, size);
-        return bookingClient.getBookings(userId, stateGateway.get(), from, size);
+        return bookingClient.getBookings(userId, stateGateway, from, size);
     }
 
     @Data
@@ -53,12 +49,9 @@ public class BookingControllerGateway {
                                                      Integer from,
                                                      @Positive @RequestParam(name = "size", defaultValue = "10")
                                                      Integer size) {
-        Optional<StateGateway> stateGateway = StateGateway.from(stateParam);
-        if (stateGateway.isEmpty()) {
-            return ResponseEntity.badRequest().body(new HttpError("Unknown state: " + stateParam));
-        }
+        StateGateway stateGateway = StateGateway.from(stateParam);
         log.info("Get booking for owner with state {}, userId={}, from={}, size={}", stateParam, userId, from, size);
-        return bookingClient.getBookingsByOwner(userId, stateGateway.get(), from, size);
+        return bookingClient.getBookingsByOwner(userId, stateGateway, from, size);
     }
 
     @PostMapping

@@ -1,6 +1,6 @@
 package ru.practicum.shareit.booking.dto;
 
-import java.util.Optional;
+import ru.practicum.shareit.exception.UnknownStateException;
 
 public enum StateGateway {
     // Все
@@ -16,12 +16,13 @@ public enum StateGateway {
     // Ожидающие подтверждения
     WAITING;
 
-    public static Optional<StateGateway> from(String stringState) {
+    public static StateGateway from(String stringState) {
         for (StateGateway stateGateway : values()) {
             if (stateGateway.name().equalsIgnoreCase(stringState)) {
-                return Optional.of(stateGateway);
+                return stateGateway;
             }
         }
-        return Optional.empty();
+
+        throw new UnknownStateException(stringState);
     }
 }

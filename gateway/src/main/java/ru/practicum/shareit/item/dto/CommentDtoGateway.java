@@ -21,5 +21,5 @@ public class CommentDtoGateway {
     private String authorName;
 
     @FutureOrPresent
-    LocalDateTime created;
+    private LocalDateTime created;
 }
